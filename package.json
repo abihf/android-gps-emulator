@@ -1,0 +1,27 @@
+{
+  "name": "android-gps-emulator",
+  "version": "1.0.0",
+  "description": "Send geolocation to android emulator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abihf/android-gps-emulator.git"
+  },
+  "keywords": [
+    "android",
+    "express"
+  ],
+  "author": "Abi Hafshin <abi@hafs.in>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abihf/android-gps-emulator/issues"
+  },
+  "homepage": "https://github.com/abihf/android-gps-emulator#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
+  }
+}

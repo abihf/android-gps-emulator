@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Android GPS Emulator</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      
+      .mapboxgl-marker {
+        width: 20px;
+        height: 20px;
+        margin: -10px;
+        background-color: #802050;
+        border-radius: 10px;
+        border: 2px solid #fff;
+        box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+      }
+    </style>
+    
+    
+  </head>
+  <body>
+    <div id='map'></div>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    var socket = io();
+    
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWJpaGYiLCJhIjoiY2lwN3NicTZrMDE2c3NsbHlwMDl4ZXRsYiJ9.3GdBEi_wdWOCGHDdDCqXtA';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      center: [106.825, -6.363],
+      zoom: 15,
+      style: 'mapbox://styles/mapbox/streets-v9'
+    });
+    var marker = null;
+    map.on("click", function(ev) {
+      console.log(ev.lngLat);
+      if (marker == null) {
+        marker = new mapboxgl.Marker()
+                    .setLngLat(ev.lngLat)
+                    .addTo(map);
+      } else {
+        marker.setLngLat(ev.lngLat);
+      }
+      sendPoint(ev.lngLat.lng, ev.lngLat.lat);
+    });
+    
+    function sendPoint(lat, lon) {
+      socket.emit('geo', [lat, lon]);
+    }
+    
+    socket.on('geo', function(msg) {console.log(msg)});
+    
+    </script>
+  </body>
+</html>
